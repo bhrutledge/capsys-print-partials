@@ -1,6 +1,6 @@
 # capsys and print partials
 
-This repository reproduces some confusing behavior from pytest's [`capsys` fixture](https://docs.pytest.org/en/latest/capture.html). I'm assuming there's a detail that I've overlooked, but it could be a bug. See <https://github.com/pytest-dev/pytest/issues/6299>.
+This repository reproduces some confusing behavior from pytest's [`capsys` fixture](https://docs.pytest.org/en/latest/capture.html). I filed reported it as a [pytest issue](https://github.com/pytest-dev/pytest/issues/6299), which was promptly closed with a workaround. I've implemented that in a [pull request](https://github.com/bhrutledge/capsys-print-partials/pull/1).
 
 ## Background
 

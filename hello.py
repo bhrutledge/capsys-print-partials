@@ -9,5 +9,8 @@ def write_hello(file=sys.stdout):
     print("Hello")
 
 
-with open("hello.txt", "w") as file:
-    write_hello(file)
+if __name__ == "__main__":
+    write_hello()
+
+    with open("hello.txt", "w") as file:
+        write_hello(file)

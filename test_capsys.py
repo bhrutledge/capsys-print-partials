@@ -4,9 +4,11 @@ from functools import partial
 
 import pytest
 
+import hello
+
 
 def test_write_hello(capsys):
-    import hello
+    hello.write_hello()
 
     captured = capsys.readouterr()
     assert captured.out == "Hello\n"

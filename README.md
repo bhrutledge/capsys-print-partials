@@ -13,15 +13,21 @@ def write_hello(file=sys.stdout):
     print("Hello")
 
 
-with open("hello.txt", "w") as file:
-    write_hello(file)
+if __name__ == "__main__":
+    write_hello()
+
+    with open("hello.txt", "w") as file:
+        write_hello(file)
 ```
 
 This works as hoped. However, that broke my existing tests that use the `capsys` fixture:
 
 ```python
+import hello
+
+
 def test_write_hello(capsys):
-    import hello
+    hello.write_hello()
 
     captured = capsys.readouterr()
     assert captured.out == "Hello\n"
@@ -36,7 +42,7 @@ This includes the code above, plus a parameterized test of various ways of overr
 ```
 $ tox -- -v --tb=short
 py37 installed: attrs==19.3.0,importlib-metadata==1.0.0,more-itertools==8.0.0,packaging==19.2,pluggy==0.13.1,py==1.8.0,pyparsing==2.4.5,pytest==5.3.1,six==1.13.0,wcwidth==0.1.7,zipp==0.6.0
-py37 run-test-pre: PYTHONHASHSEED='4170732163'
+py37 run-test-pre: PYTHONHASHSEED='1017596322'
 py37 run-test: commands[0] | pytest -v --tb=short
 ============================= test session starts ==============================
 platform darwin -- Python 3.7.4, pytest-5.3.1, py-1.8.0, pluggy-0.13.1 -- /Users/brian/Code/capsys-print-partials/.tox/py37/bin/python
@@ -54,19 +60,21 @@ test_capsys.py::test_print[stdout_write] PASSED                          [100%]
 
 =================================== FAILURES ===================================
 _______________________________ test_write_hello _______________________________
-test_capsys.py:12: in test_write_hello
+test_capsys.py:14: in test_write_hello
     assert captured.out == "Hello\n"
 E   AssertionError: assert '' == 'Hello\n'
 E     + Hello
+----------------------------- Captured stdout call -----------------------------
+Hello
 ___________________________ test_print[partial_file] ___________________________
-test_capsys.py:33: in test_print
+test_capsys.py:35: in test_print
     assert captured.out == "Hello\n"
 E   AssertionError: assert '' == 'Hello\n'
 E     + Hello
 ----------------------------- Captured stdout call -----------------------------
 Hello
 ______________________ test_print[partial_builtins_file] _______________________
-test_capsys.py:33: in test_print
+test_capsys.py:35: in test_print
     assert captured.out == "Hello\n"
 E   AssertionError: assert '' == 'Hello\n'
 E     + Hello

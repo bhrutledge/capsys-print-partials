@@ -3,8 +3,8 @@ import sys
 from functools import partial
 
 
-def write_hello(file=sys.stdout):
-    print = partial(builtins.print, file=file)
+def write_hello(file=None):
+    print = partial(builtins.print, file=file if file else sys.stdout)
 
     print("Hello")
 
